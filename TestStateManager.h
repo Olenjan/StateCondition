@@ -34,7 +34,7 @@ public:
 
 
 		//Each frame check if any exit conditions are true
-		addConditionalEntry(eTestStates::FIRST, eTestStates::SECOND, [](sGlobalContext& context, sTestData& from, sTestData& target) -> bool
+		addConditionalEntry(eTestStates::FIRST, eTestStates::SECOND, [](const sGlobalContext& context, const sTestData& from, const sTestData& target) -> const bool
 			{
 				auto& i = context.i;
 				if (i == target.threshold)
@@ -45,7 +45,7 @@ public:
 				return false;
 			});
 
-		addConditionalEntry(eTestStates::SECOND, eTestStates::FIRST, [](sGlobalContext& context, sTestData& from, sTestData& target) -> bool
+		addConditionalEntry(eTestStates::SECOND, eTestStates::FIRST, [](const sGlobalContext& context, const sTestData& from, const sTestData& target) -> const bool
 			{
 				auto& i = context.i;
 				if (i == target.threshold)

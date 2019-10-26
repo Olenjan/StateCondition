@@ -11,8 +11,8 @@ class CBaseStateManager
 protected:
 	struct sConditionalTarget
 	{
-		bool (*condition)(C& cd, D& current, D& target) = nullptr;
-		T target;
+		const bool (*condition)(const C& cd, const D& current, const D& target) = nullptr;
+		const T target;
 	};
 private:
 	// Todo: Optimize out map. is slow.
@@ -32,20 +32,19 @@ public:
 		m_TransitionData[to] = data;
 	}
 
-	T getActiveState()
+	T getActiveState() const
 	{
 		return m_ActiveState;
 	}
 
-	D getStateData(T to)
+	const D& getStateData(T to) const
 	{
 
 		auto fromFound = m_TransitionData.find(to);
 
 		if (fromFound != m_TransitionData.end())
 		{
-			auto foundData = fromFound->second;
-			return foundData;
+			return fromFound->second;
 		}
 
 		//Todo: custom exception
@@ -58,13 +57,15 @@ public:
 
 	//
 	void            addConditionalEntry(T state,
-		T target,
-		bool (*condition)(C& cd, D& current, D& target))
+										T target,
+										const bool (*condition)(const C& cd,
+																const D& current,
+																const D& target))
 	{
 		m_Conditions[state].push_back({ condition, target });
 	}
 
-	std::vector<T> getTrueStates(C& e)
+	const std::vector<T>	getTrueStates(const C& e) const
 	{
 		std::vector<T> result;
 
@@ -92,7 +93,7 @@ public:
 
 	virtual void onEntry(C& controlledData, T oldState, T newState) = 0;
 
-	T solveMultiples(std::vector<T> states)
+	virtual T solveMultiples(std::vector<T> states) const
 	{
 		if (states.size() == 0)
 		{
@@ -112,7 +113,12 @@ public:
 
 		if (possibleStates.size() > 0) // somehow adds even more delay, up to 15ms
 		{
-			setState(controlledData, solveMultiples(possibleStates));
+			if(possibleStates.size()  == 1)
+				setState(controlledData, *possibleStates.begin());
+			else
+			{
+				setState(controlledData, solveMultiples(possibleStates));
+			}
 		}
 	}
 

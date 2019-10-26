@@ -31,7 +31,7 @@ struct sAnimationData
 {
 	std::string animation		= "";
 	double		animationSpeed	= 0.0f;
-	double			animationLength = 0.0f;
+	double		animationLength = 0.0f;
 
 };
 struct CFakeEntity
@@ -52,22 +52,23 @@ public:
 		setData(eAnimationStates::IDLE, sAnimationData{"Animation_Idle", 1.0f, 4.50f});
 		setData(eAnimationStates::WALK, sAnimationData{"Animation_Walk", 1.0f, 1.0f });
 
-		addConditionalEntry(eAnimationStates::IDLE, eAnimationStates::WALK, [](CFakeEntity& context, sAnimationData& from, sAnimationData& target) -> bool
+		addConditionalEntry(eAnimationStates::IDLE, eAnimationStates::WALK, [](const CFakeEntity& context, const sAnimationData& from, const sAnimationData& target) -> const bool
 			{
 				return (context.velocityComponent > 0.1);
 			});
-		addConditionalEntry(eAnimationStates::WALK, eAnimationStates::IDLE, [](CFakeEntity& context, sAnimationData& from, sAnimationData& target) -> bool
+		addConditionalEntry(eAnimationStates::WALK, eAnimationStates::IDLE, [](const CFakeEntity& context, const sAnimationData& from, const sAnimationData& target) -> const bool
 			{
 				return (context.velocityComponent < 0.1);
 			});
-	}
+	} 
 	
 	virtual void onEntry(CFakeEntity& context, eAnimationStates oldState, eAnimationStates newState)
 	{
+		const auto stateData = getStateData(newState);
 		context.animatorComponent.currentAnimationTime = 0.0f;
-		context.animatorComponent.playbackSpeed = getStateData(newState).animationSpeed;
-		context.animatorComponent.playingAnimation = getStateData(newState).animation;
-		context.animatorComponent.animationLength = getStateData(newState).animationLength;
+		context.animatorComponent.playbackSpeed = stateData.animationSpeed;
+		context.animatorComponent.playingAnimation = stateData.animation;
+		context.animatorComponent.animationLength = stateData.animationLength;
 
 		std::cout << "Entry: " << context.animatorComponent.playingAnimation << std::endl;
 		totalEntries++;
