@@ -1,0 +1,8 @@
+﻿  StateCondition.cpp
+C:\Users\jan\Documents\Projects\bb\StateCondition\StateCondition\TestStateManager.h(72,1): warning C4244:  '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\jan\Documents\Projects\bb\StateCondition\StateCondition\StateCondition.cpp(14,22): warning C4244:  'return': conversion from '_Rep' to 'double', possible loss of data
+C:\Users\jan\Documents\Projects\bb\StateCondition\StateCondition\StateCondition.cpp(14,22): warning C4244:         with
+C:\Users\jan\Documents\Projects\bb\StateCondition\StateCondition\StateCondition.cpp(14,22): warning C4244:         [
+C:\Users\jan\Documents\Projects\bb\StateCondition\StateCondition\StateCondition.cpp(14,22): warning C4244:             _Rep=__int64
+C:\Users\jan\Documents\Projects\bb\StateCondition\StateCondition\StateCondition.cpp(14,22): warning C4244:         ]
+  StateCondition.vcxproj -> C:\Users\jan\Documents\Projects\bb\StateCondition\x64\Debug\StateCondition.exe
