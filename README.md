@@ -41,7 +41,9 @@ struct sGlobalContext
 
 Create class derived from CBaseStateManager using defined types
 ```
-public CBaseStateManager<sGlobalContext, eTestStates, sTestData>
+class CTestManager : public CBaseStateManager<sGlobalContext, eTestStates, sTestData>
+{
+};
 ```
 
 Overload and define onEntry function. Use getData(state) and manipulate context on entry to newState
