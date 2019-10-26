@@ -12,6 +12,7 @@ Conditional state machine template library
 
 
 Examples see TestStateManager.h  
+# Create Base types
 Create Enum state type
 ```
 enum eTestStates
@@ -39,6 +40,7 @@ struct sGlobalContext
 }
 ```
 
+# Create state manager class
 Create class derived from CBaseStateManager using defined types  
 ```
 class CTestManager : public CBaseStateManager<sGlobalContext, eTestStates, sTestData>
@@ -63,7 +65,7 @@ virtual void update(double dt, sGlobalContext& context)
 }
 ```
 
-
+# Configure static data
 Set state data and conditional entries  
 set state data, is static throughout object lifetime. unless new setData is called  
 ```
@@ -71,11 +73,22 @@ setData(eTestStates::FIRST, { 0, 1.0 });
 setData(eTestStates::SECOND, { 10, -1.0 });
 ```
 
+# Set conditional entries
 Add exit/entry condition between First and second state  
 Each update cycle, exit conditions are checked for current active state  
 This call is not allowed to manipulate data.
 ```
-  auto lambda = [](const sGlobalContext& context, const sTestData& from, const sTestData& target) -> const bool{ return false };
-	addConditionalEntry(eTestStates::FIRST, eTestStates::SECOND, lambda);
+auto lambda = [](const sGlobalContext& context, const sTestData& from, const sTestData& target) -> const bool{ return false };
+addConditionalEntry(eTestStates::FIRST, eTestStates::SECOND, lambda);
 ```
-Given lambda never returns true, so Entry from first to second state is not possible.
+Given lambda never returns true, so Entry from first to second state is not possible.  
+
+  
+
+Initial state must be set before first update is called.
+```
+CTestManager* mgr = new CTestManager();
+... Configure ...
+mgr->setState(context, eTestStates::FIRST);
+```
+
