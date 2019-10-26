@@ -28,7 +28,6 @@ public:
 	int totalEntries = 0;
 	CTestManager()
 	{
-		m_ActiveState = eTestStates::FIRST;
 		setData(eTestStates::FIRST, { 0, 1.0 }); // Entry cost -10
 		setData(eTestStates::SECOND, { 10, -1.0 }); // entry cost 10
 
