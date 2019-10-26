@@ -39,14 +39,14 @@ struct sGlobalContext
 }
 ```
 
-Create class derived from CBaseStateManager using defined types
+Create class derived from CBaseStateManager using defined types  
 ```
 class CTestManager : public CBaseStateManager<sGlobalContext, eTestStates, sTestData>
 {
 };
 ```
 
-Overload and define onEntry function. Use getData(state) and manipulate context on entry to newState
+Overload and define onEntry function. Use getData(state) and manipulate context on entry to newState  
 ```
 virtual void onEntry(sGlobalContext& context, eTestStates oldState, eTestStates newState)
 {
@@ -54,7 +54,7 @@ virtual void onEntry(sGlobalContext& context, eTestStates oldState, eTestStates 
 }
 ```
 
-Overload and define update function.
+Overload and define update function.  
 ```
 virtual void update(double dt, sGlobalContext& context)
 {
@@ -64,15 +64,15 @@ virtual void update(double dt, sGlobalContext& context)
 ```
 
 
-* Set state data and conditional entries
-set state data, is static throughout object lifetime. unless new setData is called
+Set state data and conditional entries  
+set state data, is static throughout object lifetime. unless new setData is called  
 ```
 setData(eTestStates::FIRST, { 0, 1.0 });
 setData(eTestStates::SECOND, { 10, -1.0 });
 ```
 
-* add exit/entry condition between First and second state
-Each update cycle, exit conditions are checked for current active state
+Add exit/entry condition between First and second state  
+Each update cycle, exit conditions are checked for current active state  
 This call is not allowed to manipulate data.
 ```
   auto lambda = [](const sGlobalContext& context, const sTestData& from, const sTestData& target) -> const bool{ return false };
